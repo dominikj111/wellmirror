@@ -1,4 +1,4 @@
-# Build a Modular Website Mirroring and Text-Corpus Crawler
+# Build a Modular Website Mirroring and Text-Corpus Wellmirror
 
 ## Objective
 
@@ -32,13 +32,13 @@ The system should therefore separate:
 7. source reconciliation
 8. corpus generation
 
-Do not implement everything as one crawler class or script.
+Do not implement everything as one wellmirror class or script.
 
 ---
 
 ## Primary Design Principle
 
-The crawler is a **source mirror**, not merely a scraper.
+The wellmirror is a **source mirror**, not merely a scraper.
 
 A source has an externally observable state.
 
@@ -87,7 +87,7 @@ Important:
 
 Do not assume that an external "Source" link is the article's canonical content.
 
-The crawler must distinguish:
+The wellmirror must distinguish:
 
 - the page hosted by channeling.safo.cz
 - external references linked from that page
@@ -123,7 +123,7 @@ Do not introduce a heavyweight framework unless a concrete requirement justifies
 Use a structure approximately equivalent to:
 
     src/
-      crawler/
+      wellmirror/
         domain/
         discovery/
         acquisition/
@@ -456,7 +456,7 @@ A later transformation layer can produce:
 - chat templates
 - tokenized datasets
 
-The crawler should preserve source information independently of those formats.
+The wellmirror should preserve source information independently of those formats.
 
 ---
 
@@ -482,7 +482,7 @@ The plan must be inspectable.
 
 Example CLI:
 
-    crawler sync channeling-safo --dry-run
+    wellmirror sync channeling-safo --dry-run
 
 Possible output:
 
@@ -504,11 +504,11 @@ The user must be able to limit work per run.
 
 Examples:
 
-    crawler sync channeling-safo --limit 10
+    wellmirror sync channeling-safo --limit 10
 
-    crawler sync channeling-safo --limit 10 --oldest-first
+    wellmirror sync channeling-safo --limit 10 --oldest-first
 
-    crawler sync channeling-safo --limit 10 --newest-first
+    wellmirror sync channeling-safo --limit 10 --newest-first
 
 The limit applies to actual acquisition work, not discovery.
 
@@ -516,7 +516,7 @@ Discovery should determine the complete known remote inventory first.
 
 The user must therefore be able to ask:
 
-    crawler status channeling-safo
+    wellmirror status channeling-safo
 
 and obtain information such as:
 
@@ -549,7 +549,7 @@ Day 3:
 
     sync --limit 10
 
-The crawler must continue from the existing state rather than starting from scratch.
+The wellmirror must continue from the existing state rather than starting from scratch.
 
 It must not redownload unchanged documents.
 
@@ -584,7 +584,7 @@ Local:
     4
     5
 
-The crawler must report:
+The wellmirror must report:
 
     Missing locally: 3
 
@@ -703,12 +703,12 @@ Design a small explicit CLI.
 
 Initial commands:
 
-    crawler sources
-    crawler discover <source>
-    crawler status <source>
-    crawler sync <source>
-    crawler report <source>
-    crawler inspect <document-id>
+    wellmirror sources
+    wellmirror discover <source>
+    wellmirror status <source>
+    wellmirror sync <source>
+    wellmirror report <source>
+    wellmirror inspect <document-id>
 
 Useful options:
 
@@ -746,13 +746,13 @@ The configuration can contain:
 - extraction adapter
 - canonicalization policy
 
-Do not put source-specific selectors into global crawler logic.
+Do not put source-specific selectors into global wellmirror logic.
 
 ---
 
 # Politeness and Safety
 
-The crawler must:
+The wellmirror must:
 
 - respect robots.txt where applicable
 - rate-limit requests
@@ -830,7 +830,7 @@ The target site is merely the first adapter.
 
 The intended architecture is:
 
-    Generic crawler engine
+    Generic wellmirror engine
             +
     source adapter
             +
@@ -861,7 +861,7 @@ The first milestone is complete when:
 - remote deletions are detectable
 - source-specific logic is isolated in an adapter
 - tests cover reconciliation behavior
-- no LLM is required by the crawler itself
+- no LLM is required by the wellmirror itself
 - no database is required
 - the raw source can later be reconstructed independently of the normalized corpus
 
