@@ -868,3 +868,9 @@ The first milestone is complete when:
 Before writing significant code, create a short `DESIGN.md` documenting the observed target-site structure and the proposed domain model.
 
 Do not invent undocumented site behavior. Inspect it first.
+
+## Related
+
+The corpus this pipeline produces is intended for **Wellspring** — the private experiment that
+fine-tunes an own model on a chosen article corpus and serves it raw. wellmirror owns the *collection*;
+it stays a generic mirror with per-source adapters and does not learn anything about training.
